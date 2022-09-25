@@ -5,3 +5,6 @@ A Mandelbrot program
 
 ## quickreplace
 Text replacement through regular expressions
+
+## fundamental_types
+Experiments with numbers, characters, tuples, arrays, slices...
