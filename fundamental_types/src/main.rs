@@ -80,6 +80,25 @@ fn test_assign_modify_arrays() {
     assert_ne!(arr1, arr2);
 }
 
+/*
+The following two do not compile since an array of strings does not implement Copy.
+
+#[test]
+fn test_assign_arrays_of_strings() {
+    let arr1 = ["hello".to_string(), "ciao".to_string()];
+    let arr2 = arr1; // makes a copy of arr1
+    assert_eq!(arr1, arr2);
+}
+
+#[test]
+fn test_assign_modify_arrays_of_strings() {
+    let arr1 = ["hello".to_string(), "ciao".to_string()];
+    let mut arr2 = arr1; // makes a copy of arr1
+    arr2[1] = "Achtung".to_string();
+    assert_ne!(arr1, arr2);
+}
+*/
+
 #[test]
 fn test_assign_tuples() {
     let t1 = (1, 2);
@@ -99,7 +118,7 @@ fn test_assign_modify_tuples() {
 /*#[test]
 fn test_assign_vectors() {
     let v1 = vec![1, 2, 3, 4];
-    let v2 = v1; // makes a copy of v1
+    let v2 = v1;
     assert_eq!(v1, v2);
 }*/
 
@@ -107,10 +126,22 @@ fn test_assign_vectors() {
 /*#[test]
 fn test_assign_modify_vectors() {
     let v1 = vec![1, 2, 3, 4];
-    let mut v2 = v1; // makes a copy of v1
+    let mut v2 = v1;
     v2[2] = 5;
     assert_ne!(v1, v2);
 }*/
+
+#[test]
+fn test_pass_array_to_fn() {
+    let arr = [1, 2, 3, 4];
+    foo(arr);
+    assert_eq!(arr[0], 1);
+}
+
+fn foo(mut a: [i32; 4]) {
+    a[0] = a[0] + 1;
+    assert_eq!(a[0], 2);
+}
 
 #[test]
 fn vec_product() {
