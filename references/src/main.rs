@@ -38,6 +38,7 @@ fn sort_works(table: &mut Table) {
 
 struct Anime {
     name: &'static str,
+    #[allow(dead_code)]
     bechdel_pass: bool
 }
 
@@ -81,3 +82,55 @@ fn test_eq_references() {
     let ry: Refint = &y;
     assert_eq!(rx, ry); // looks at the final pointed values
 }
+
+fn factorial(n: usize) -> usize {
+    (1..n+1).product()
+}
+
+#[test]
+fn test_non_leftvalue_refs() {
+    // the following is synonym to
+    // let temp = factorial(6);
+    // let r = &temp;
+    let r = &factorial(6);
+
+    assert_eq!(r + 1009, 1729);
+
+    // the following is synonym to
+    // {
+    //   let temp = 1009;
+    //   assert_eq!(r + temp, 1729);
+    // }
+    assert_eq!(r + &1009, 1729); // arithmetic operators dereference only once
+    // assert_eq!(r + &&1009, 1729); // doesn't compile
+}
+
+#[test]
+fn test_non_leftvalue_refs2() {
+    let r = &&factorial(6);
+    assert_eq!(r, &&720); // equality dereferences arbitrarily....
+}
+
+#[test]
+fn test_lifetimes() {
+    let mut r;
+    let y = 17;
+    {
+        let x = 1;
+        r = &x;
+        r = &y; // by replacing the reference in r, everything is OK
+    }
+    assert_eq!(*r, 17);
+}
+
+/*
+#[test]
+fn test_lifetimes_broken() {
+    let mut r;
+    {
+        let x = 1;
+        r = &x;
+    }
+    assert_eq!(*r, 17);
+}
+*/
