@@ -134,3 +134,66 @@ fn test_lifetimes_broken() {
     assert_eq!(*r, 17);
 }
 */
+
+fn extend(vec: &mut Vec<f64>, slice: &[f64]) {
+    for elt in slice {
+        vec.push(*elt);
+    }
+}
+
+#[test]
+fn test_extend() {
+    let mut wave = Vec::new();
+    let head = vec![0.0, 1.0];
+    let tail = [0.0, -1.0];
+    extend(&mut wave, &head);
+    extend(&mut wave, &tail);
+    assert_eq!(wave, vec![0.0, 1.0, 0.0, -1.0]);
+    let mutable = &mut wave;
+    let shared = &*mutable; // both & and &mut to wave exist here...
+    /*for elt in shared {
+        mutable.push(1.0);
+    }*/
+    mutable.len();
+    shared.len();
+    // extend(&mut wave, &wave); cannot have &mut and & at the same time
+}
+
+#[test]
+fn test_borrow() {
+    let mut x = 10;
+    let r1 = &x;
+    let r2 = &x;
+    let z = x;
+    assert_eq!(x+r1+r2+z, 40);
+}
+
+/*#[test]
+fn test_mut_borrow() {
+    let mut x = 10;
+    let r1 = &mut x;
+    let z = x; // cannot use while mutably borrowed
+    assert_eq!(x+*r1+z, 30);
+}
+*/
+
+#[test]
+fn test_reborrow_shared() {
+    let mut w = (107, 109);
+    let r = &w;
+    let r0 = &r.0;
+    //let m1 = &mut r.1; // cannot borrow mutable from shared
+    assert_eq!(*r0, 107);
+}
+
+#[test]
+fn test_reborrow_mutable() {
+    let mut v = (136, 139);
+    let m = &mut v;
+    let m0 = &mut m.0; // two &mut to v exist here...
+    *m0 = 137;
+    let r1 = &m.1;
+    assert_eq!(*r1, 139);
+    assert_eq!(*m0, 137);
+    assert_eq!((*m).0, 137);
+}
