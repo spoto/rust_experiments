@@ -2,6 +2,12 @@
 name = "crates_and_modules"
 version = "0.1.0"
 edition = "2021"
+authors = ["Fausto Spoto <fausto.spoto@hotmoka.io>"]
+license = "MIT"
+homepage = "https://www.hotmoka.io/"
+description = """
+Eventually this code will be famous.
+"""
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
