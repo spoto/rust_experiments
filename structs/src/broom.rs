@@ -20,7 +20,7 @@ fn chop(b: Broom) -> (Broom, Broom) {
 }
 
 #[test]
-fn chop_broom_test() {
+fn test_chop_broom() {
     let hokey = Broom {
         name: "Hokey".to_string(),
         height: 60,
