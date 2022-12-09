@@ -1,3 +1,5 @@
+mod my_trait;
+
 use std::io::Write;
 
 fn main() {
