@@ -1,4 +1,5 @@
 mod my_trait;
+mod dot;
 
 use std::io::Write;
 

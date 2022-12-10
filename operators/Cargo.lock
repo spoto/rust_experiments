@@ -85,7 +85,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "traits"
+name = "operators"
 version = "0.1.0"
 dependencies = [
  "num",
