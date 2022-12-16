@@ -41,7 +41,10 @@ fn start_sorting_thread(mut cities: Vec<City>) -> thread::JoinHandle<Vec<City>> 
     // you can add a variable name as parameter, it is just ignored
     let key_fn: fn(&City) -> i64 = |city: &City| -> i64 { -city.population };
 
+    // move is really important for key_fn here, since cities is moved anyway (it's passed by value
+    // to the closure)
     thread::spawn(move || {
+        //let key_fn: fn(&City) -> i64 = |city: &City| -> i64 { -city.population };
         cities.sort_by_key(key_fn);
         cities
     })
@@ -49,7 +52,7 @@ fn start_sorting_thread(mut cities: Vec<City>) -> thread::JoinHandle<Vec<City>> 
 
 #[test]
 fn test_start_sorting_thread() {
-    let mut cities = create_cities();
+    let cities = create_cities();
     let future = start_sorting_thread(cities);
     assert_eq!("France", future.join().expect("thread failed!")[0].country);
 }
