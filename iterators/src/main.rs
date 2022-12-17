@@ -3,6 +3,8 @@ use std::fmt::Debug;
 mod ranges;
 mod vector;
 mod str;
+mod pipeline;
+mod narcissistic;
 
 fn main() {
     println!("Hello, world!");
