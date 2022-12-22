@@ -5,6 +5,7 @@ mod vector;
 mod str;
 mod pipeline;
 mod narcissistic;
+mod terminal;
 
 fn main() {
     println!("Hello, world!");
