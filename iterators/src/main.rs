@@ -6,6 +6,8 @@ mod str;
 mod pipeline;
 mod narcissistic;
 mod terminal;
+mod i32range;
+mod binarytree;
 
 fn main() {
     println!("Hello, world!");

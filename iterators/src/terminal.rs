@@ -138,3 +138,46 @@ fn test_collect() {
     let s: BTreeMap<&String,i32> = words.iter().zip(1..).collect();
     assert_eq!(s.len(), 4);
 }
+
+#[test]
+fn test_extend() {
+    let mut v: Vec<i32> = (0..5).map(|i| 1 << i).collect();
+    v.extend(&[31, 57, 99, 163]);
+    assert_eq!(v, &[1, 2, 4, 8, 16, 31, 57, 99, 163]);
+}
+
+#[test]
+fn test_partition() {
+    let things = ["doorknob", "mushroom", "noodle", "giraffe", "grapefruit"];
+    let (living, nonliving): (Vec<&str>, Vec<&str>) = things.iter()
+        .partition(|name| name.as_bytes()[0] & 1 != 0);
+    assert_eq!(living,    &["mushroom", "giraffe", "grapefruit"]);
+    assert_eq!(living,    ["mushroom", "giraffe", "grapefruit"]);
+    assert_eq!(living,    vec!["mushroom", "giraffe", "grapefruit"]);
+    assert_eq!(nonliving, vec!["doorknob", "noodle"]);
+}
+
+#[test]
+fn test_for_each() {
+    let mut s = String::new();
+
+    ["doves", "hens", "birds"].iter()
+        .zip(["turtle", "french", "calling"].iter())
+        .zip(2..5)
+        .rev()
+        .map(|((item, kind), quantity)|
+            format!("{} {} {}", quantity, kind, item)
+        )
+        .for_each(|gift| {
+            s.push_str("You have received: ");
+            s.push_str(gift.as_str());
+            s.push('\n');
+        });
+
+    println!("{}", s);
+    assert_eq!(s, "\
+            You have received: 4 calling birds\n\
+            You have received: 3 french hens\n\
+            You have received: 2 turtle doves\n\
+    ");
+}
