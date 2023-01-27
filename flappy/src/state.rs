@@ -1,6 +1,6 @@
 use bracket_lib::prelude::*;
-use crate::player::Player;
-use crate::obstacle::Obstacle;
+use crate::sprites::Player;
+use crate::sprites::Obstacle;
 use crate::SCREEN_HEIGHT;
 use crate::SCREEN_WIDTH;
 use crate::FRAME_DURATION;

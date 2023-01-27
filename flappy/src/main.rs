@@ -1,8 +1,7 @@
 use bracket_lib::prelude::*;
 
-mod player;
+mod sprites;
 mod state;
-mod obstacle;
 
 use state::State;
 
