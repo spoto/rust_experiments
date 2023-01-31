@@ -1,9 +1,9 @@
 use bracket_lib::prelude::*;
-use crate::sprites::Player;
-use crate::sprites::Obstacle;
-use crate::SCREEN_HEIGHT;
-use crate::SCREEN_WIDTH;
-use crate::FRAME_DURATION;
+use super::entities::Player;
+use super::entities::Obstacle;
+use super::SCREEN_HEIGHT;
+use super::SCREEN_WIDTH;
+use super::FRAME_DURATION;
 
 pub struct State {
     player: Player,

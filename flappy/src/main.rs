@@ -1,6 +1,6 @@
 use bracket_lib::prelude::*;
 
-mod sprites;
+mod entities;
 mod state;
 
 use state::State;
