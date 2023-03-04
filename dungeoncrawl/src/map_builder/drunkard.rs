@@ -15,6 +15,7 @@ impl MapArchitect for DrunkardsWalkArchitect {
             monster_spawns: Vec::new(),
             player_start: Point::zero(),
             amulet_start: Point::zero(),
+            theme: super::themes::DungeonTheme::new(),
         };
         mb.fill(TileType::Wall);
         let center = Point::new(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
@@ -49,7 +50,7 @@ impl DrunkardsWalkArchitect {
     fn drunkard(&mut self, start: &Point, rng: &mut RandomNumberGenerator, map: &mut Map) {
         let mut drunkard_pos = start.clone();
 
-        for distance_staggered in 0 ..= STAGGER_DISTANCE {
+        for _distance_staggered in 0 ..= STAGGER_DISTANCE {
             let drunk_idx = map.point2d_to_index(drunkard_pos);
             map.tiles[drunk_idx] = TileType::Floor;
             match rng.range(0, 4) {
