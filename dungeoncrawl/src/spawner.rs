@@ -29,7 +29,37 @@ pub fn spawn_amulet_of_yala(ecs: &mut World, pos: Point) {
     );
 }
 
-pub fn spawn_monster(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Point) {
+fn spawn_healing_potion(ecs: &mut World, pos: Point) {
+    ecs.push(
+        (
+            Item,
+            pos,
+            Render {
+                color: ColorPair::new(WHITE, BLACK),
+                glyph: to_cp437('!'),
+            },
+            Name("Healing Potion".to_string()),
+            ProvidesHealing{amount: 6},
+        )
+    );
+}
+
+fn spawn_magic_mapper(ecs: &mut World, pos: Point) {
+    ecs.push(
+        (
+            Item,
+            pos,
+            Render {
+                color: ColorPair::new(WHITE, BLACK),
+                glyph: to_cp437('{'),
+            },
+            Name("Dungeon Map".to_string()),
+            ProvidesDungeonMap{},
+        )
+    );
+}
+
+fn spawn_monster(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Point) {
     let (hp, name, glyph) = match rng.roll_dice(1, 10) {
         1..=8 => goblin(),
         _ => orc(),
@@ -73,4 +103,13 @@ fn goblin() -> (i32, String, FontCharType) {
 
 fn orc() -> (i32, String, FontCharType) {
     (2, "Orc".to_string(), to_cp437('o'))
+}
+
+pub fn spawn_entity(ecs: &mut World, rng: &mut RandomNumberGenerator, pos: Point) {
+    let roll = rng.roll_dice(1, 6);
+    match roll {
+        1 => spawn_healing_potion(ecs, pos),
+        2 => spawn_magic_mapper(ecs, pos),
+        _ => spawn_monster(ecs, rng, pos),
+    }
 }

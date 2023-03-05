@@ -9,6 +9,7 @@ mod tooltips;
 mod combat;
 mod chasing;
 mod fov;
+mod use_item;
 
 use crate::prelude::*;
 
