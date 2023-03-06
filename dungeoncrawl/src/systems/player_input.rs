@@ -74,15 +74,15 @@ pub fn player_input(
             }
         }
 
-        if !did_something {
-            if let Ok(mut health) = ecs
-                .entry_mut(player)
-                .unwrap()
-                .get_component_mut::<Health>()
-            {
-                health.current = i32::min(health.max, health.current+1);
-            }
-        }
+        // if !did_something {
+        //     if let Ok(mut health) = ecs
+        //         .entry_mut(player)
+        //         .unwrap()
+        //         .get_component_mut::<Health>()
+        //     {
+        //         health.current = i32::min(health.max, health.current+1);
+        //     }
+        // }
         *turn_state = TurnState::PlayerTurn;
     }
 }
