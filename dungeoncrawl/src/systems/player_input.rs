@@ -48,7 +48,7 @@ pub fn player_input(
             _ => Point::new(0, 0),
         };
 
-        let mut did_something = false;
+        //let mut did_something = false;
         let mut enemies = <(Entity, &Point)>::query()
             .filter(component::<Enemy>());
         let (player, destination) = players.iter(ecs)
@@ -64,12 +64,12 @@ pub fn player_input(
                 })
                 .for_each(|(enemy, _)| {
                     hit_something = true;
-                    did_something = true;
+                    //did_something = true;
                     commands.push(((), WantsToAttack { attacker: player, victim: *enemy }));
                 });
 
             if !hit_something {
-                did_something = true;
+                //did_something = true;
                 commands.push(((), WantsToMove { entity: player, destination }));
             }
         }

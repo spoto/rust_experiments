@@ -12,7 +12,6 @@ mod fov;
 mod use_items;
 
 use crate::prelude::*;
-use crate::systems::use_items::use_items;
 
 pub fn build_input_scheduler() -> Schedule {
     Schedule::builder()

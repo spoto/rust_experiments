@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use crate::systems::entity_render::entity_render;
 
 #[system]
 #[read_component(ActivateItem)]
