@@ -33,6 +33,17 @@ pub fn player_input(
                     .for_each(|(entity, _item, _item_pos)| {
                         commands.remove_component::<Point>(*entity);
                         commands.add_component(*entity, Carried(player));
+
+                        if let Ok(e) = ecs.entry_ref(*entity) {
+                            if e.get_component::<Weapon>().is_ok() {
+                                <(Entity, &Carried, &Weapon)>::query()
+                                    .iter(ecs)
+                                    .filter(|(_, c, _)| c.0 == player)
+                                    .for_each(|(e, _c, _w)| {
+                                        commands.remove(*e);
+                                    })
+                            }
+                        }
                     });
                 Point::new(0, 0)
             },
@@ -48,7 +59,6 @@ pub fn player_input(
             _ => Point::new(0, 0),
         };
 
-        //let mut did_something = false;
         let mut enemies = <(Entity, &Point)>::query()
             .filter(component::<Enemy>());
         let (player, destination) = players.iter(ecs)
@@ -64,25 +74,14 @@ pub fn player_input(
                 })
                 .for_each(|(enemy, _)| {
                     hit_something = true;
-                    //did_something = true;
                     commands.push(((), WantsToAttack { attacker: player, victim: *enemy }));
                 });
 
             if !hit_something {
-                //did_something = true;
                 commands.push(((), WantsToMove { entity: player, destination }));
             }
         }
 
-        // if !did_something {
-        //     if let Ok(mut health) = ecs
-        //         .entry_mut(player)
-        //         .unwrap()
-        //         .get_component_mut::<Health>()
-        //     {
-        //         health.current = i32::min(health.max, health.current+1);
-        //     }
-        // }
         *turn_state = TurnState::PlayerTurn;
     }
 }
